@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
                     is Resource.Error -> {
                         binding.progressBar.visibility = View.GONE
                         binding.viewError.root.visibility = View.VISIBLE
-                        binding.viewError.tvError.text = movie.message ?: getString(R.string.something_wrong)
+                        binding.viewError.tvError.text =
+                            movie.message ?: getString(R.string.something_wrong)
                     }
                 }
             }
@@ -72,5 +73,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onBackPressed() {
+        finishAfterTransition()
     }
 }

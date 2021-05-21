@@ -43,5 +43,6 @@ android {
 dependencies {
     implementation project(":core")
     implementation project(":app")
+    //noinspection DifferentStdlibGradleVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

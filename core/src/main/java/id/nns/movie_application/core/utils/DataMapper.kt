@@ -1,12 +1,12 @@
 package id.nns.movie_application.core.utils
 
 import id.nns.movie_application.core.data.source.local.entity.MovieEntity
-import id.nns.movie_application.core.data.source.remote.response.Movie
+import id.nns.movie_application.core.data.source.remote.response.MovieResponse
 import id.nns.movie_application.core.domain.model.MovieModel
 
 object DataMapper {
 
-    fun mapResponsesToEntities(input: List<Movie>): List<MovieEntity> {
+    fun mapResponsesToEntities(input: List<MovieResponse>): List<MovieEntity> {
         val movieList = ArrayList<MovieEntity>()
         input.map {
             val movie = MovieEntity(

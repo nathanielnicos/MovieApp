@@ -3,7 +3,7 @@ package id.nns.movie_application.core.data
 import id.nns.movie_application.core.data.source.local.LocalDataSource
 import id.nns.movie_application.core.data.source.remote.RemoteDataSource
 import id.nns.movie_application.core.data.source.remote.network.ApiResponse
-import id.nns.movie_application.core.data.source.remote.response.Movie
+import id.nns.movie_application.core.data.source.remote.response.MovieResponse
 import id.nns.movie_application.core.domain.model.MovieModel
 import id.nns.movie_application.core.domain.repository.IMovieRepository
 import id.nns.movie_application.core.utils.AppExecutors
@@ -21,7 +21,7 @@ class MovieRepository @Inject constructor(
 ) : IMovieRepository {
 
     override fun getAllMovies(): Flow<Resource<List<MovieModel>>> =
-        object : NetworkBoundResource<List<MovieModel>, List<Movie>>() {
+        object : NetworkBoundResource<List<MovieModel>, List<MovieResponse>>() {
             override fun loadFromDB(): Flow<List<MovieModel>> {
                 return localDataSource.getAllMovie().map { DataMapper.mapEntitiesToDomain(it) }
             }
@@ -29,10 +29,10 @@ class MovieRepository @Inject constructor(
             override fun shouldFetch(data: List<MovieModel>?): Boolean =
                 data == null || data.isEmpty()
 
-            override suspend fun createCall(): Flow<ApiResponse<List<Movie>>> =
+            override suspend fun createCall(): Flow<ApiResponse<List<MovieResponse>>> =
                 remoteDataSource.getAllMovies()
 
-            override suspend fun saveCallResult(data: List<Movie>) {
+            override suspend fun saveCallResult(data: List<MovieResponse>) {
                 val movieList = DataMapper.mapResponsesToEntities(data)
                 localDataSource.insertMovie(movieList)
             }

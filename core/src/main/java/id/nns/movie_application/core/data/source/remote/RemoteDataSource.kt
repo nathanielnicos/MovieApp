@@ -2,7 +2,7 @@ package id.nns.movie_application.core.data.source.remote
 
 import id.nns.movie_application.core.data.source.remote.network.ApiResponse
 import id.nns.movie_application.core.data.source.remote.network.ApiService
-import id.nns.movie_application.core.data.source.remote.response.Movie
+import id.nns.movie_application.core.data.source.remote.response.MovieResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getAllMovies() : Flow<ApiResponse<List<Movie>>> {
+    suspend fun getAllMovies() : Flow<ApiResponse<List<MovieResponse>>> {
         return flow {
             try {
                 val response = apiService.getUpcomingMovies()
@@ -25,7 +25,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     emit(ApiResponse.Empty)
                 }
             } catch (e: Exception) {
-                emit(ApiResponse.Error(e.message.toString()))
+                emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
